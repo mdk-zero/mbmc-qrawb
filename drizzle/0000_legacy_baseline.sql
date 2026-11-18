@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  employee_id VARCHAR(50) NOT NULL UNIQUE,
+  first_name VARCHAR(120) NOT NULL,
+  last_name VARCHAR(120) NOT NULL,
+  position VARCHAR(100) NOT NULL,
+  photo_filename VARCHAR(100) NULL,
+  email VARCHAR(120) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS attendance (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  employee_id VARCHAR(50) NOT NULL,
+  name VARCHAR(241) NOT NULL,
+  position VARCHAR(100) NOT NULL,
+  queue_number INT NOT NULL,
+  scanned_at DATETIME NOT NULL,
+  INDEX (user_id, scanned_at),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS daily_queue (
+  queue_date DATE PRIMARY KEY,
+  last_number INT NOT NULL
+);
